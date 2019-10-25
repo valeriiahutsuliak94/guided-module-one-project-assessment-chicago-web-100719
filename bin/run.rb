@@ -3,23 +3,31 @@ def run_app
 
 
     def welcome_menu
-        puts " Welcome to IMDb app "
+        puts "
+                   
+    WW      WW        lll                                     tt              
+    WW      WW   eee  lll   cccc  oooo  mm mm mmmm    eee     tt     oooo     
+    WW   W  WW ee   e lll cc     oo  oo mmm  mm  mm ee   e    tttt  oo  oo    
+     WW WWW WW eeeee  lll cc     oo  oo mmm  mm  mm eeeee     tt    oo  oo    
+      WW   WW   eeeee lll  ccccc  oooo  mmm  mm  mm  eeeee     tttt  oooo     
+
+
+
+      IIIII MM    MM DDDDD   BBBBB                                        
+       III  MMM  MMM DD  DD  BB   B       aa aa pp pp   pp pp             
+       III  MM MM MM DD   DD BBBBBB      aa aaa ppp  pp ppp  pp           
+       III  MM    MM DD   DD BB   BB    aa  aaa pppppp  pppppp            
+      IIIII MM    MM DDDDDD  BBBBBB      aaa aa pp      pp                
+                                                pp      pp                
+
+                                                                                                                             
+
+        "
     end 
 
     def main_menu
-        puts "Please choose from the main menu"
-        puts "s for movie search"
-        puts "c to create a movie"
-        puts "u for movie update"
-        puts "d to delete a movie"
-        puts "a list of the movie names in ascending order"
-        puts "z list of the movie names in descending order"
-        puts "g for search by genre"
-        puts "f for find movie by actor name"
-        puts "l for find actor what plain in a movie"
-        puts "p for the top 5 movies"
-        puts "t for to 5 actors"
-        puts "q for exit"
+        puts "============Please choose from the main menu============\n\n"
+        puts " 1 for movie search\n\n 2 to create a movie\n\n 3 for movie update\n\n 4 to delete a movie\n\n 5 list of the movie names in ascending order\n\n 6 list of the movie names in descending order\n\n 7 for search by genre\n\n 8 to find movie by actor name\n\n 9 to find a list of actors that are in the movie\n\n 10 for the top 5 movies\n\n 11 for to 5 actors\n\n q for exit\n\n"
         gets.chomp
     end
 
@@ -28,14 +36,22 @@ def run_app
     
     while user_response != "q"
         case user_response
-        when "s"
+        when "1"
             puts `clear`
             puts "Please enter the name of the movie you would like to search"
             search_response = gets.chomp
-            puts Movie.search_movie(search_response)
-            puts "The movie #{search_response.capitalize} is in our app!"
+            search_by_movie = Movie.where name: search_response
+            if search_by_movie.length > 0
+            puts "The movie is in our app:"
+            puts "#{search_by_movie[0][:name]}"
+            puts "#{search_by_movie[0][:director]}"
+            puts "#{search_by_movie[0][:genre]}"
+            puts "#{search_by_movie[0][:year]}"
+        else 
+            puts "Sorry, no movie by this name exist"
+        end 
             user_response = main_menu
-        when "c" 
+        when "2" 
             puts `clear`
             puts "Please write a name of a movie you would like to create"
             name_answer = gets.chomp
@@ -48,7 +64,7 @@ def run_app
             Movie.create(name: name_answer, director: director_answer, genre: genre_answer, year: year_answer)
             puts "Thank you for updating our app by adding a new movie!"
             user_response = main_menu
-        when "u" 
+        when "3" 
             puts `clear`
             puts "What movie would you like to update?"
             response = gets.chomp 
@@ -60,7 +76,7 @@ def run_app
             movie_to_update.update(update_category => new_update)
             puts "Thank you for the movie update" 
             user_response = main_menu
-        when  "d" 
+        when  "4" 
             puts `clear`
             puts "Which movie would you like to delete?"
             response = gets.chomp
@@ -68,26 +84,28 @@ def run_app
             delete_movie.destroy 
             puts "The movie was successfully deleted"
             user_response = main_menu
-        when "t"
+        when "11"
+            puts `clear`
              top = Actor.all.max_by(5) do |actor|
              actor.movies.count
             end 
             top_name = top.map do |actor|
                 actor.name
             end 
-            puts "There is a top 5 actors in our app #{top_name.join(', ')}"
+            puts "Top 5 actors in our app #{top_name.join(', ')}"
             user_response = main_menu
-        when "p"
+        when "10"
+            puts `clear`
             top = Movie.all.max(5) do |movie|
                 movie.actors.count
             end 
             top_name = top.map do |movie|
                 movie.name
             end 
-            puts "There is a top 5 movies in our app #{top_name.join(', ')}"
+            puts "Top 5 movies in our app #{top_name.join(', ')}"
             user_response = main_menu
             
-        when "a" 
+        when "5" 
             puts `clear`
             puts "Please see our list of movies"
             order_movie = Movie.order(:name)
@@ -96,7 +114,7 @@ def run_app
             end
             user_response = main_menu
     
-        when "z" 
+        when "6" 
             puts `clear`
             puts "Please see our list of movies"
             order_movie = Movie.order('id ASC').reorder('name DESC')
@@ -104,41 +122,55 @@ def run_app
             puts movie.name
             end 
             user_response = main_menu
-        when "f"
+        when "8"
+            puts `clear`
             puts "Please enter name of the actor"
             user_input = gets.chomp
             find_by_actor = Actor.all.find_by(name: user_input)
-            search_movie = find_by_actor.movies.map do |movie|
-            movie.name
+            if find_by_actor
+               search_movie = find_by_actor.movies.map do |movie|
+               movie.name
             end 
-            puts "This a list of movie where this actor #{search_movie.join (', ')} are plaing"
-            # p find_by_actor.movies
+            puts "This a list of movie: #{search_movie.join (', ')} where this actor are plaing"
+        else 
+            puts "Soory, we did not find any movie by this actor name"
+        end 
             user_response = main_menu
-        when "l"
-            puts "name of movie"
+        when "9"  
+            puts `clear`
+            puts "Please enter name of the movie"
             user_input = gets.chomp
             find_by_movie = Movie.all.find_by(name: user_input)
-            search_actor = find_by_movie.actors.map do |actor|
-            actor.name
+            if find_by_movie
+                search_actor = find_by_movie.actors.map do |actor|
+                actor.name
+                end 
+                puts "This a list of actors  #{search_actor.join (', ')} are playing in this movie"
+            else
+                puts "Sorry, we did not find any actors by this movie"
             end 
-            puts "This a list of actors  #{search_actor.join (', ')} are plaing in this movie"
-            user_response = main_menu
-        when "g" 
-            # puts `clear`
+                user_response = main_menu  
+        when "7" 
+            puts `clear`
             puts "Please enter genre of the movie"
             user_input = gets.chomp
-            puts "Please see the list of movies in this genre:"
             find_by_genre = Movie.all.where("genre = ?", user_input) #where genre: user_input dont work
-            puts find_by_genre.map {|movie| movie.name}   
-            #  p find_by_genre[0].name
-            # movie
-            #  puts "Please see the list of movies in this genre: #{find_by_genre[0].name}"   
+            if find_by_genre.length > 0
+               serch_genre = find_by_genre.map {|movie| movie.name}
+               puts "Please see the list of movies in this genre:" 
+               puts serch_genre 
+            else
+                puts "Sorry, we did not find any movie in this genre"
             end
-            
-       
+            user_response = main_menu 
+        else 
+            puts "Error: user_responce has an invalid value (#{user_response})"
+            user_response = main_menu 
         end 
-        puts `clear`
-        puts "Have a Good Day!!!"
+
+            
+    end 
+    puts "Have a Good Day!!!"
 end
 
 
@@ -149,153 +181,35 @@ end
 
 
 
-# def main_screen 
-#     puts""
-#     puts""
-#     puts """""""""""""""""""""Welcome to IMDb"""""""""""""""""""""""""
-#     puts""
-#     puts""
-#     puts "s for search movie"
-#     puts "c for create movie"
-#     puts "u for update movie"
-#     puts "d for delete movie"
-#     puts "a list of the movie (A..Z)"
-#     puts "z list of the movie (Z..A)"
-#     puts "g for search by genre"
-#     puts "q for exit"
-#     puts "m for main menu"
-#     user_input = gets.chomp
-#     # puts "#{user_input}"
-
-#     case  user_input
-#     when 's' then
-#         puts " What movie you want to search?"
-#         search_response = gets.chomp
-#         puts Movie.search_movie(search_response)
-#         puts "The movie #{search_response.capitalize} is in our app!"
-
-#         main_screen
-#     when 'c' then
-#         puts "What a name movie you want to create?"
-#         name_answer = gets.chomp
-#         puts "What a name of director in this movie?"
-#         director_answer = gets.chomp
-#         puts "What a genre of this movie?"
-#         genre_answer = gets.chomp
-#         puts "What a year of this movie?"
-#         year_answer = gets.chomp
-#         Movie.create(name: name_answer, director: director_answer, genre: genre_answer, year: year_answer)
-
-#         main_screen
-#     when 'u' then
-#         puts "What movie  you want to update?"
-#         response = gets.chomp
-#         puts `clear`
-#         movie_to_update = Movie.find_by(name: response)
-#         puts "What you want to update in this movie?"
-#         update_category = gets.chomp 
-#         puts `clear`
-#         puts "What do you want the new #{update_category} to be?"
-#         new_update = gets.chomp
-#         puts `clear`
-#         movie_to_update.update(update_category => new_update) 
-
-#         main_screen
-#     when  'd' then
-#         puts "What movie you wold like to delete?"
-#         response = gets.chomp
-#         delete_movie = Movie.find_by(name: response)
-#         delete_movie.destroy 
-        
-#         main_screen
-       
-#     when 'a' then
-#         puts `clear`
-#         order_movie = Movie.order(:name)
-#         order_movie.each do |movie| 
-#         puts movie.name
-
-#         end 
-
-#     main_screen
-#     when 'z' then
-#         order_movie = Movie.order('id ASC').reorder('name DESC')
-#         order_movie.each do |movie|
-#         puts movie.name
-        
-#         end 
-#         main_screen
-        
-#     when 'g' then
-#         puts "Please enter genre"
-#         user_input = gets.chomp
-#         find_by_genre = Movie.all.where genre: user_input
-#         # find_by_genre.map {|movie| movie.genre}      
-#         p find_by_genre
-#         puts "Here sre the movies in this genre: #{find_by_genre.name}"   
-      
-#         main_screen
-#     when 'm' then 
-#         puts "s for search movie"
-#         puts "c for create movie"
-#         puts "u for update movie"
-#         puts "d for delete movie"
-#         puts "a list of the movie (A..Z)"
-#         puts "z list of the movie (Z..A)"
-#         puts "g for search by genre"
-#         puts "q for exit"
-#         puts "m for main menu"
-#         user_input = gets.chomp
-#         # puts "#{user_input}"
-        
-    
-    
-#     when 'q' then
-#         exit
-#     else 
-#         puts "Dont match any of answers"
-    
-#     end  
-# end 
+    # puts "Please enter name of the movie"
+            # user_input = gets.chomp
+            # find_by_movie = Movie.all.find_by(name: user_input)
+            # if find_by_movie
+            #    search_actor = find_by_movie.actors.map do |actor|
+            #    actor.name
+            #    puts "This a list of actors  #{search_actor} are playing in this movie"
+            # end 
+            # else
+            #    puts "Sorry, this actor did not play in this movie"
+            # end 
+            # user_response = main_menu  
 
 
+    # puts "Please enter name of the actor"
+            # user_input = gets.chomp
+            #  if find_by_actor = Actor.all.find_by(name: user_input)
+            # # if find_by_actor
+            #     search_movie = find_by_actor.movies.map do |movie|
+            #     search_movie.name
+            #     # puts "This a list of movie where this actor #{search_movie} are plaing"
+            #     end
+            # else
+            #     puts "Sorry, no movies by that actor exists."
+            # end 
+            # user_response = main_menu
 
-
-# main_screen 
-
-
-
-
-#As a user, I want to find a movie (Reader)
-
-#As a user, I want to create a new movie, so that will 
-#create and save a new movie(Create)
-
-#As a user, I want to update and save my movie.
-
-#As a user, I want to be able to  delete my movie.
-
-#I want to be aible print list with all movie ASC
-
-
-
-
-    # elsif response == 'name'
-    #         puts "Please enter new name"
-    #         name_update = gets.chomp
-    #         .update(name: name_update)
-    #     elsif response == 'director'
-    #         puts "Please enter new director"
-    #         director_update = gets.chomp
-    #         .update(director: director_update)
-    #     elsif response == 'genre'
-    #         puts "Please enter new genre"
-    #         genre_updsate = gets.chomp
-    #         movie_to_update.update(genre: genre_update)
-    #      else response == 'year'
-    #         puts "Please enter new year"
-    #         year_update = gets.chomp
-    #         Movie.update(year: year_update)
-    #     end 
-    #  end 
-    # def delete_movie
+                 # search_actor = find_by_movie.actors.map do |actor|
+            # actor.name
+            # end 
+            # puts "This a list of actors  #{search_actor.join (', ')} are plaing in this movie"
+            # user_response = main_menu
