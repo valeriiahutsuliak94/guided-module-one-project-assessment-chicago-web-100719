@@ -100,7 +100,7 @@ def run_app
         when "To 5 actors"
             puts `clear`
              top = Actor.all.max_by(5) do |actor|
-             actor.movies.count
+             actor.movies.count  
             end 
             top_name = top.map do |actor|
                 actor.name
@@ -120,13 +120,14 @@ def run_app
             
         when "List of the movie names in ascending order"
             puts `clear`
-            puts "Please see our list of movies"
             order_movie = Movie.order(:name)
-            order_movie.each do |movie| 
-            puts movie.name
+            movie_list = order_movie.map do |movie| 
+            movie.name
             end
+            movie_select = PROMPT.select("Please see our list of movies", movie_list )
+            search_movie = Movie.find_by name: movie_select
+            puts "There is a movie you selected: #{(movie_select)} genre: #{search_movie.genre} director: #{search_movie.director} year: #{search_movie.year}"
             user_response = main_menu
-    
         when "List of the movie names in descending order"
             puts `clear`
             puts "Please see our list of movies"
@@ -167,7 +168,7 @@ def run_app
             puts `clear`
             puts "Please enter genre of the movie"
             user_input = gets.chomp
-            find_by_genre = Movie.all.where("genre = ?", user_input) #where genre: user_input dont work
+            find_by_genre = Movie.all.where("genre = ?", user_input) 
             if find_by_genre.length > 0
                serch_genre = find_by_genre.map {|movie| movie.name}
                puts "Please see the list of movies in this genre:" 

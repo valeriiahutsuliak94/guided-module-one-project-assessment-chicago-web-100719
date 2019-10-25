@@ -4,8 +4,11 @@ In this project I tried to build an app that provides you data about movies. In 
 
 # Getting starded 
  Respository - https://github.com/valeriiahutsuliak94/guided-module-one-project-assessment-chicago-web-100719
+ Forked and clone respository. 
+
 # To run:
 Type "bundle install" in your terminal to make sure you have all the needed gems.
+
 # Gems used:
 gem "sinatra-activerecord"
 gem "sqlite3"
