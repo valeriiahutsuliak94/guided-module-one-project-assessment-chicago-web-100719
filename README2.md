@@ -6,6 +6,15 @@ In this project I tried to build an app that provides you data about movies. In 
  Respository - https://github.com/valeriiahutsuliak94/guided-module-one-project-assessment-chicago-web-100719
 # To run:
 Type "bundle install" in your terminal to make sure you have all the needed gems.
+# Gems used:
+gem "sinatra-activerecord"
+gem "sqlite3"
+gem "pry"
+gem "require_all"
+gem 'rest-client'
+gem 'artii'
+gem 'rainbow'
+
 To start the application, enter 'ruby bin/run.rb' in your terminal.
 
 
@@ -42,16 +51,6 @@ Waiting for the Barbarians(example)
 2.Access a Sqlite3 Database using ActiveRecord
 3.Seed database with data from an API
 4.Build out a CLI that allows users to interact with database
-5.Separate models for runner and CLI interface
-
-# Gems used:
-gem "sinatra-activerecord"
-gem "sqlite3"
-gem "pry"
-gem "require_all"
-gem 'rest-client'
-gem 'artii'
-gem 'rainbow'
 
 Authors: 
 Valeriia Hutsuliak

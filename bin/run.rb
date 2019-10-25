@@ -1,4 +1,6 @@
 require_relative '../config/environment'
+
+PROMPT = TTY::Prompt.new
 def run_app
 
 
@@ -26,9 +28,20 @@ def run_app
     end 
 
     def main_menu
-        puts "============Please choose from the main menu============\n\n"
-        puts " 1 for movie search\n\n 2 to create a movie\n\n 3 for movie update\n\n 4 to delete a movie\n\n 5 list of the movie names in ascending order\n\n 6 list of the movie names in descending order\n\n 7 for search by genre\n\n 8 to find movie by actor name\n\n 9 to find a list of actors that are in the movie\n\n 10 for the top 5 movies\n\n 11 for to 5 actors\n\n q for exit\n\n"
-        gets.chomp
+        user_response = PROMPT.select("Please choose from the main menu", [
+        "Movie search",
+        "Create movie",
+        "Movie update",
+        "Movie delete",
+        "List of the movie names in ascending order",
+        "List of the movie names in descending order",
+        "Search by genre",
+        "Find movie by actor name",
+        "Find a list of actors that are in the movie",
+        "Top 5 movies",
+        "To 5 actors",
+        "For exit"
+         ])
     end
 
     welcome_menu
@@ -36,7 +49,7 @@ def run_app
     
     while user_response != "q"
         case user_response
-        when "1"
+        when "Movie search"
             puts `clear`
             puts "Please enter the name of the movie you would like to search"
             search_response = gets.chomp
@@ -51,7 +64,7 @@ def run_app
             puts "Sorry, no movie by this name exist"
         end 
             user_response = main_menu
-        when "2" 
+        when "Create movie"
             puts `clear`
             puts "Please write a name of a movie you would like to create"
             name_answer = gets.chomp
@@ -64,7 +77,7 @@ def run_app
             Movie.create(name: name_answer, director: director_answer, genre: genre_answer, year: year_answer)
             puts "Thank you for updating our app by adding a new movie!"
             user_response = main_menu
-        when "3" 
+        when "Movie update" 
             puts `clear`
             puts "What movie would you like to update?"
             response = gets.chomp 
@@ -76,7 +89,7 @@ def run_app
             movie_to_update.update(update_category => new_update)
             puts "Thank you for the movie update" 
             user_response = main_menu
-        when  "4" 
+        when  "Movie delete"
             puts `clear`
             puts "Which movie would you like to delete?"
             response = gets.chomp
@@ -84,7 +97,7 @@ def run_app
             delete_movie.destroy 
             puts "The movie was successfully deleted"
             user_response = main_menu
-        when "11"
+        when "To 5 actors"
             puts `clear`
              top = Actor.all.max_by(5) do |actor|
              actor.movies.count
@@ -94,7 +107,7 @@ def run_app
             end 
             puts "Top 5 actors in our app #{top_name.join(', ')}"
             user_response = main_menu
-        when "10"
+        when "Top 5 movies"
             puts `clear`
             top = Movie.all.max(5) do |movie|
                 movie.actors.count
@@ -105,7 +118,7 @@ def run_app
             puts "Top 5 movies in our app #{top_name.join(', ')}"
             user_response = main_menu
             
-        when "5" 
+        when "List of the movie names in ascending order"
             puts `clear`
             puts "Please see our list of movies"
             order_movie = Movie.order(:name)
@@ -114,7 +127,7 @@ def run_app
             end
             user_response = main_menu
     
-        when "6" 
+        when "List of the movie names in descending order"
             puts `clear`
             puts "Please see our list of movies"
             order_movie = Movie.order('id ASC').reorder('name DESC')
@@ -122,7 +135,7 @@ def run_app
             puts movie.name
             end 
             user_response = main_menu
-        when "8"
+        when "Find movie by actor name"
             puts `clear`
             puts "Please enter name of the actor"
             user_input = gets.chomp
@@ -136,7 +149,7 @@ def run_app
             puts "Soory, we did not find any movie by this actor name"
         end 
             user_response = main_menu
-        when "9"  
+        when "Find a list of actors that are in the movie"  
             puts `clear`
             puts "Please enter name of the movie"
             user_input = gets.chomp
@@ -150,7 +163,7 @@ def run_app
                 puts "Sorry, we did not find any actors by this movie"
             end 
                 user_response = main_menu  
-        when "7" 
+        when "Search by genre" 
             puts `clear`
             puts "Please enter genre of the movie"
             user_input = gets.chomp
@@ -163,6 +176,10 @@ def run_app
                 puts "Sorry, we did not find any movie in this genre"
             end
             user_response = main_menu 
+        when "For exit"
+            puts `clear`
+            puts "🎬🎬🎬 Have a Good Day 🎬🎬🎬"
+            exit
         else 
             puts "Error: user_responce has an invalid value (#{user_response})"
             user_response = main_menu 
@@ -170,7 +187,7 @@ def run_app
 
             
     end 
-    puts "Have a Good Day!!!"
+  
 end
 
 
