@@ -199,35 +199,4 @@ end
 
 
 
-    # puts "Please enter name of the movie"
-            # user_input = gets.chomp
-            # find_by_movie = Movie.all.find_by(name: user_input)
-            # if find_by_movie
-            #    search_actor = find_by_movie.actors.map do |actor|
-            #    actor.name
-            #    puts "This a list of actors  #{search_actor} are playing in this movie"
-            # end 
-            # else
-            #    puts "Sorry, this actor did not play in this movie"
-            # end 
-            # user_response = main_menu  
-
-
-    # puts "Please enter name of the actor"
-            # user_input = gets.chomp
-            #  if find_by_actor = Actor.all.find_by(name: user_input)
-            # # if find_by_actor
-            #     search_movie = find_by_actor.movies.map do |movie|
-            #     search_movie.name
-            #     # puts "This a list of movie where this actor #{search_movie} are plaing"
-            #     end
-            # else
-            #     puts "Sorry, no movies by that actor exists."
-            # end 
-            # user_response = main_menu
-
-                 # search_actor = find_by_movie.actors.map do |actor|
-            # actor.name
-            # end 
-            # puts "This a list of actors  #{search_actor.join (', ')} are plaing in this movie"
-            # user_response = main_menu
+   

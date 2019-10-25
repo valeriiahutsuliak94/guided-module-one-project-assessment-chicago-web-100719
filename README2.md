@@ -1,4 +1,4 @@
-# Movie App 
+# Movie IMBd App 
 In this project I tried to build an app that provides you data about movies. In this app you can search, update, create, and delete data. You can use the app to reseasrch basic information about movies and actors. Enjoy the app!
 
 
@@ -27,21 +27,21 @@ ruby bin/run.rb
 The MoviApp should pop up in your terminal
 
 Select an option from the main menu to proceed:
-1 for movie search
- 2 to create a movie
- 3 for movie update
- 4 to delete a movie
- 5 list of the movie names in ascending order
- 6 list of the movie names in descending order
- 7 for search by genre
- 8 to find movie by actor name
- 9 to find a list of actors that are in the movie
- 10 for the top 5 movies
- 11 for to 5 actors
- q for exit
+  "Movie search",
+        "Create movie",
+        "Movie update",
+        "Movie delete",
+        "List of the movie names in ascending order",
+        "List of the movie names in descending order",
+        "Search by genre",
+        "Find movie by actor name",
+        "Find a list of actors that are in the movie",
+        "Top 5 movies",
+        "To 5 actors",
+        "For exit"
 
 For example, to see the movie by genre, enter:
-g
+"Search by genre"
 Then, type in:
 Classic(example)
 Then, you will see:
